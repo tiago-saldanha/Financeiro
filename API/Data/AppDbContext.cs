@@ -1,4 +1,5 @@
 ﻿using API.Domain.Entities;
+using API.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -24,9 +25,12 @@ namespace API.Data
 
             modelBuilder.Entity<Transaction>(builder =>
             {
-                builder.HasKey(t => t.Id);
-                builder.Property(t => t.Description).IsRequired().HasMaxLength(200);
-                builder.Property(t => t.Amount).HasPrecision(18, 2);
+                builder.Property(t => t.Amount)
+                .IsRequired()
+                .HasConversion(
+                    money => money.Value,
+                    value => new Money(value))
+                .HasPrecision(18, 2);
             });
         }
     }

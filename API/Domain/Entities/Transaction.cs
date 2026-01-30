@@ -1,5 +1,6 @@
 ﻿using API.Domain.Enums;
 using API.Domain.Exceptions;
+using API.Domain.ValueObjects;
 
 namespace API.Domain.Entities
 {
@@ -7,7 +8,7 @@ namespace API.Domain.Entities
     {
         protected Transaction() { }
 
-        private Transaction(Guid id, string description, decimal amount, DateTime dueDate, TransactionType type, Guid categoryId, DateTime createdAt)
+        private Transaction(Guid id, string description, Money amount, DateTime dueDate, TransactionType type, Guid categoryId, DateTime createdAt)
         {
             if (string.IsNullOrEmpty(description)) 
                 throw new TransactionException("A descrição da transação deve ser informada");
@@ -29,11 +30,11 @@ namespace API.Domain.Entities
         }
 
         public static Transaction Create(string description, decimal amount, DateTime dueDate, TransactionType type, Guid categoryId, DateTime CreatedAt)
-            => new(Guid.NewGuid(), description, amount, dueDate, type, categoryId, CreatedAt);
+            => new(Guid.NewGuid(), description, new Money(amount), dueDate, type, categoryId, CreatedAt);
 
         public Guid Id { get; private set; }
         public string Description { get; private set; }
-        public decimal Amount { get; private set; }
+        public Money Amount { get; private set; }
         public DateTime DueDate { get; private set; }
         public DateTime? PaymentDate { get; private set; }
         public TransactionStatus Status { get; private set; }

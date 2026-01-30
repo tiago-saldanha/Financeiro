@@ -73,7 +73,7 @@ namespace API.Tests.Domain.Entities
 
             var message = Assert.Throws<TransactionException>(() => Transaction.Create(description, amount, dueDate, type, categoryId, createdAt)).Message;
 
-            Assert.Equal("O valor da transação deve ser maior que 0", message);
+            Assert.Equal("O valor não pode ser negativo", message);
         }
 
         [Fact]
