@@ -37,13 +37,13 @@ namespace API.Tests.Domain.Entities
         }
 
         [Fact]
-        public void ShouldCancelTransactionAfterUnpay()
+        public void ShouldCancelTransactionAfterReopen()
         {
             var sut = Create(TransactionType.Expense, true);
             var paymentDate = Tomorrow;
 
             sut.Pay(paymentDate);
-            sut.Unpay();
+            sut.Reopen();
             sut.Cancel();
 
             Assert.Equal(TransactionStatus.Cancelled, sut.Status);

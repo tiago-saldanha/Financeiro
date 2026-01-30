@@ -24,13 +24,13 @@ namespace API.Tests.Domain.Entities
         }
 
         [Fact]
-        public void ShouldUnpayTransaction()
+        public void ShouldReopenTransaction()
         {
             var sut = Create(TransactionType.Expense, false);
             var paymentDate = Tomorrow;
 
             sut.Pay(paymentDate);
-            sut.Unpay();
+            sut.Reopen();
 
             Assert.Equal(TransactionStatus.Pending, sut.Status);
             Assert.Null(sut.PaymentDate);
@@ -82,14 +82,14 @@ namespace API.Tests.Domain.Entities
         }
 
         [Fact]
-        public void ShouldNotUnpayTransactionIfStatusIsPending()
+        public void ShouldNotReopenTransactionIfStatusIsPending()
         {
             var sut = Create(TransactionType.Revenue, true);
             var paymentDate = Today;
             sut.Pay(paymentDate);
-            sut.Unpay();
+            sut.Reopen();
 
-            var message = Assert.Throws<TransactionException>(() => sut.Unpay()).Message;
+            var message = Assert.Throws<TransactionException>(() => sut.Reopen()).Message;
 
             Assert.Equal("A transação não está paga", message);
             Assert.Equal(TransactionStatus.Pending, sut.Status);
@@ -97,12 +97,12 @@ namespace API.Tests.Domain.Entities
         }
 
         [Fact]
-        public void ShouldNotUnpayTransactionIfStatusIsCancelled()
+        public void ShouldNotReopenTransactionIfStatusIsCancelled()
         {
             var sut = Create(TransactionType.Expense, true);
             sut.Cancel();
 
-            var message = Assert.Throws<TransactionException>(() => sut.Unpay()).Message;
+            var message = Assert.Throws<TransactionException>(() => sut.Reopen()).Message;
 
             Assert.Equal("A transação não está paga", message);
             Assert.Equal(TransactionStatus.Cancelled, sut.Status);

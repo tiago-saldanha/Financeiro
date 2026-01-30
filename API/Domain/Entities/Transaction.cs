@@ -56,7 +56,7 @@ namespace API.Domain.Entities
             Status = TransactionStatus.Paid;
         }
 
-        public void Unpay()
+        public void Reopen()
         {
             if (Status != TransactionStatus.Paid)
                 throw new TransactionException("A transação não está paga");
