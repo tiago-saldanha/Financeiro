@@ -11,8 +11,10 @@ namespace API.Domain.Entities
         {
             if (string.IsNullOrEmpty(description)) 
                 throw new TransactionException("A descrição da transação deve ser informada");
+
             if (amount <= 0) 
                 throw new TransactionException("O valor da transação deve ser maior que 0");
+
             if (dueDate.Date < createdAt.Date) 
                 throw new TransactionException("A data de vencimento não pode ser anterior à data de criação");
 
