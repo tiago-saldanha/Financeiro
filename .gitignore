@@ -8,3 +8,5 @@
 /API/Financeiro.db
 /API/Financeiro.db-shm
 /API/Financeiro.db-wal
+/API.Tests/bin/Debug/net8.0
+/API.Tests/obj
