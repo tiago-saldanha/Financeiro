@@ -13,7 +13,7 @@ namespace API.Tests.Domain.Entities
         [Fact]
         public void ShouldCancelTransaction()
         {
-            var sut = Create(TransactionType.Expense, true);
+            var sut = CreateTransaction(TransactionType.Expense);
 
             sut.Cancel();
 
@@ -24,7 +24,7 @@ namespace API.Tests.Domain.Entities
         [Fact]
         public void ShouldNotCancelTransactionAlreadyPaid()
         {
-            var sut = Create(TransactionType.Expense, true);
+            var sut = CreateTransaction(TransactionType.Expense);
             var paymentDate = Tomorrow;
 
             sut.Pay(paymentDate);
@@ -39,7 +39,7 @@ namespace API.Tests.Domain.Entities
         [Fact]
         public void ShouldCancelTransactionAfterReopen()
         {
-            var sut = Create(TransactionType.Expense, true);
+            var sut = CreateTransaction(TransactionType.Expense);
             var paymentDate = Tomorrow;
 
             sut.Pay(paymentDate);
@@ -50,11 +50,50 @@ namespace API.Tests.Domain.Entities
             Assert.Null(sut.PaymentDate);
         }
 
-        private static Transaction Create(TransactionType type, bool overDue)
+        [Fact]
+        public void ShouldCancelTransactionOverDue()
         {
-            return overDue ?
-                Transaction.Create("Test", 100.0M, Yesterday, type, Guid.NewGuid(), Yesterday) :
-                Transaction.Create("Test", 100.0M, Tomorrow, type, Guid.NewGuid(), Tomorrow);
+            var sut = CreateTransactionOverDue(TransactionType.Expense);
+
+            sut.Cancel();
+
+            Assert.Equal(TransactionStatus.Cancelled, sut.Status);
+            Assert.Null(sut.PaymentDate);
         }
+
+        [Fact]
+        public void ShouldNotCancelTransactionOverDueAlreadyPaid()
+        {
+            var sut = CreateTransactionOverDue(TransactionType.Expense);
+            var paymentDate = Tomorrow;
+
+            sut.Pay(paymentDate);
+            var message = Assert.Throws<TransactionCancelException>(() => sut.Cancel()).Message;
+
+            Assert.Equal("Não é possível cancelar uma transação que já foi paga", message);
+            Assert.Equal(TransactionStatus.Paid, sut.Status);
+            Assert.NotNull(sut.PaymentDate);
+            Assert.Equal(paymentDate, sut.PaymentDate);
+        }
+
+        [Fact]
+        public void ShouldCancelTransactionOverDueAfterReopen()
+        {
+            var sut = CreateTransactionOverDue(TransactionType.Expense);
+            var paymentDate = Tomorrow;
+
+            sut.Pay(paymentDate);
+            sut.Reopen();
+            sut.Cancel();
+
+            Assert.Equal(TransactionStatus.Cancelled, sut.Status);
+            Assert.Null(sut.PaymentDate);
+        }
+
+        private static Transaction CreateTransaction(TransactionType type)
+            => Transaction.Create("Test", 100.0M, Tomorrow, type, Guid.NewGuid(), Tomorrow);
+
+        private static Transaction CreateTransactionOverDue(TransactionType type)
+            => Transaction.Create("Test", 100.0M, Yesterday, type, Guid.NewGuid(), Yesterday);
     }
 }

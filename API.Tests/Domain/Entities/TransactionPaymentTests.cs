@@ -13,20 +13,20 @@ namespace API.Tests.Domain.Entities
         [Fact]
         public void ShouldPayTransaction()
         {
-            var sut = Create(TransactionType.Expense, true);
+            var sut = CreateTransaction(TransactionType.Expense);
             var paymentDate = Today;
 
             sut.Pay(paymentDate);
 
             Assert.Equal(TransactionStatus.Paid, sut.Status);
             Assert.Equal(paymentDate, sut.PaymentDate);
-            Assert.False(sut.IsOverdue);
+            Assert.False(sut.IsOverdue(Today));
         }
 
         [Fact]
         public void ShouldReopenTransaction()
         {
-            var sut = Create(TransactionType.Expense, false);
+            var sut = CreateTransactionOverDue(TransactionType.Expense);
             var paymentDate = Tomorrow;
 
             sut.Pay(paymentDate);
@@ -34,13 +34,13 @@ namespace API.Tests.Domain.Entities
 
             Assert.Equal(TransactionStatus.Pending, sut.Status);
             Assert.Null(sut.PaymentDate);
-            Assert.True(sut.IsOverdue);
+            Assert.True(sut.IsOverdue(Today));
         }
 
         [Fact]
         public void ShouldNotPayTransactionWithPaymentDateLessCreatedAtDate()
         {
-            var sut = Create(TransactionType.Revenue, false);
+            var sut = CreateTransaction(TransactionType.Revenue);
             var invalidPaymentDate = Yesterday;
 
             var message = Assert.Throws<TransactionPayException>(() => sut.Pay(invalidPaymentDate)).Message;
@@ -48,13 +48,13 @@ namespace API.Tests.Domain.Entities
             Assert.Equal("A data de pagamento não pode ser anterior à data de criação da transação", message);
             Assert.Equal(TransactionStatus.Pending, sut.Status);
             Assert.Null(sut.PaymentDate);
-            Assert.True(sut.IsOverdue);
+            Assert.False(sut.IsOverdue(Today));
         }
 
         [Fact]
         public void ShouldNotPayTransactionAlreadyPaid()
         {
-            var sut = Create(TransactionType.Expense, true);
+            var sut = CreateTransactionOverDue(TransactionType.Expense);
             var paymentDate = Today;
             sut.Pay(paymentDate);
 
@@ -69,7 +69,7 @@ namespace API.Tests.Domain.Entities
         [Fact]
         public void ShouldNotPayTransactionAfterCancel()
         {
-            var sut = Create(TransactionType.Expense, true);
+            var sut = CreateTransactionOverDue(TransactionType.Expense);
             var paymentDate = Today;
             sut.Cancel();
 
@@ -84,7 +84,7 @@ namespace API.Tests.Domain.Entities
         [Fact]
         public void ShouldNotReopenTransactionIfStatusIsPending()
         {
-            var sut = Create(TransactionType.Revenue, true);
+            var sut = CreateTransactionOverDue(TransactionType.Revenue);
             var paymentDate = Today;
             sut.Pay(paymentDate);
             sut.Reopen();
@@ -99,7 +99,7 @@ namespace API.Tests.Domain.Entities
         [Fact]
         public void ShouldNotReopenTransactionIfStatusIsCancelled()
         {
-            var sut = Create(TransactionType.Expense, true);
+            var sut = CreateTransactionOverDue(TransactionType.Expense);
             sut.Cancel();
 
             var message = Assert.Throws<TransactionReopenException>(() => sut.Reopen()).Message;
@@ -109,11 +109,10 @@ namespace API.Tests.Domain.Entities
             Assert.Null(sut.PaymentDate);
         }
 
-        private static Transaction Create(TransactionType type, bool overDue)
-        {
-            return overDue ?
-                Transaction.Create("Test", 100.0M, Yesterday, type, Guid.NewGuid(), Yesterday) :
-                Transaction.Create("Test", 100.0M, Tomorrow, type, Guid.NewGuid(), Tomorrow);
-        }
+        private static Transaction CreateTransaction(TransactionType type)
+            => Transaction.Create("Test", 100.0M, Today, type, Guid.NewGuid(), Today);
+
+        private static Transaction CreateTransactionOverDue(TransactionType type)
+            => Transaction.Create("Test", 100.0M, Yesterday, type, Guid.NewGuid(), Yesterday);
     }
 }

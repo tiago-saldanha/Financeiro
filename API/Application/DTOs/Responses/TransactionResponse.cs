@@ -26,7 +26,7 @@ namespace API.Application.DTOs.Responses
                 Status = transaction.Status.ToString(),
                 Type = transaction.Type.ToString(),
                 CategoryName = transaction.Category?.Name ?? "Sem Categoria",
-                IsOverdue = transaction.IsOverdue
+                IsOverdue = transaction.IsOverdue(DateTime.Today)
             };
         }
     }

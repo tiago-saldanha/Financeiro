@@ -74,6 +74,6 @@ namespace API.Domain.Entities
             PaymentDate = null;
         }
 
-        public bool IsOverdue => Status == TransactionStatus.Pending && DateTime.Today > Dates.DueDate.Date;
+        public bool IsOverdue(DateTime today) => Status == TransactionStatus.Pending && today.Date > Dates.DueDate.Date;
     }
 }

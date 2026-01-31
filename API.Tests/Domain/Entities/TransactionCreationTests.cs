@@ -33,7 +33,7 @@ namespace API.Tests.Domain.Entities
             Assert.Equal(sut.CategoryId, categoryId);
             Assert.Equal(createdAt, sut.Dates.CreatedAt);
             Assert.Null(sut.PaymentDate);
-            Assert.True(sut.IsOverdue);
+            Assert.True(sut.IsOverdue(Today));
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace API.Tests.Domain.Entities
             Assert.Equal(sut.CategoryId, categoryId);
             Assert.Equal(createdAt, sut.Dates.CreatedAt);
             Assert.Null(sut.PaymentDate);
-            Assert.True(sut.IsOverdue);
+            Assert.False(sut.IsOverdue(Today));
         }
 
         [Fact]
