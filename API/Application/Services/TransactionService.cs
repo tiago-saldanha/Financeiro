@@ -72,6 +72,16 @@ namespace API.Application.Services
             return TransactionResponse.Create(transaction);
         }
 
+        public async Task<TransactionResponse> ReopenAsync(Guid id)
+        {
+            var transaction = await FindAsync(id);
+            transaction.Reopen();
+
+            await context.SaveChangesAsync();
+
+            return TransactionResponse.Create(transaction);
+        }
+
         public async Task<TransactionResponse> CancelAsync(Guid id)
         {
             var transaction = await FindAsync(id);

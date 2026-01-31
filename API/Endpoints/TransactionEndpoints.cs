@@ -19,6 +19,8 @@ namespace API.Endpoints
             group.MapGet("/type/{type}", async (TransactionService service, string type) => Results.Ok(await service.GetByTypeAsync(type)));
             
             group.MapPut("/pay/{id:guid}", async (Guid id, PayTransactionRequest request, TransactionService service) => Results.Ok(await service.PaidAsync(request)));
+
+            group.MapPut("/reopen/{id:Guid}", async (Guid id, TransactionService service) => Results.Ok(await service.ReopenAsync(id)));
             
             group.MapPut("/cancel/{id:guid}", async (Guid id, TransactionService service) => Results.Ok(await service.CancelAsync(id)));
             
