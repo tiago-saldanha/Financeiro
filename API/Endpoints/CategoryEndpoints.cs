@@ -1,5 +1,5 @@
-﻿using API.Application.DTOs.Requests;
-using API.Application.Interfaces;
+﻿using Application.DTOs.Requests;
+using Application.Interfaces;
 
 namespace API.EndPoints
 {

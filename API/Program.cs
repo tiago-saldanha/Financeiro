@@ -1,11 +1,11 @@
-using API.Application.Interfaces;
-using API.Application.Services;
-using API.Data;
-using API.Domain.Repositories;
 using API.Endpoints;
 using API.EndPoints;
-using API.Infrastructure.Handlers;
-using API.Infrastructure.Repositories;
+using Application.Interfaces;
+using Application.Services;
+using Domain.Repositories;
+using Infraestructure.Handlers;
+using Infraestructure.Repositories;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

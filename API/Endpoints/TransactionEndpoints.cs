@@ -1,6 +1,6 @@
-﻿using API.Application.DTOs.Requests;
-using API.Application.Enums;
-using API.Application.Interfaces;
+﻿using Application.DTOs.Requests;
+using Application.Enums;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Endpoints
