@@ -3,45 +3,29 @@ using API.Application.DTOs.Responses;
 using API.Application.Enums;
 using API.Application.Exceptions;
 using API.Application.Interfaces;
-using API.Data;
 using API.Domain.Entities;
 using API.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
+using API.Domain.Repositories;
 
 namespace API.Application.Services
 {
-    public class TransactionAppService(AppDbContext context) : ITransactionAppService
+    public class TransactionAppService(ITransactionRepository repository) : ITransactionAppService
     {
         public async Task<IEnumerable<TransactionResponse>> GetAllAsync()
         {
-            var transactions = await context.Transactions
-                .Where(q => q.Status != TransactionStatus.Cancelled)
-                .Include(q => q.Category)
-                .AsNoTracking()
-                .ToListAsync();
-
+            var transactions = await repository.GetByFilterAsync(q => q.Status != TransactionStatus.Cancelled);
             return transactions.Select(TransactionResponse.Create);
         }
 
         public async Task<IEnumerable<TransactionResponse>> GetByStatusAsync(TransactionStatusDto status)
         {
-            var transactions = await context.Transactions
-                .Where(q => q.Status == Map(status))
-                .Include(q => q.Category)
-                .AsNoTracking()
-                .ToListAsync();
-
+            var transactions = await repository.GetByFilterAsync(q => q.Status == Map(status));
             return transactions.Select(TransactionResponse.Create);
         }
 
         public async Task<IEnumerable<TransactionResponse>> GetByTypeAsync(TransactionTypeDto type)
         {
-            var transactions = await context.Transactions
-                .Where(q => q.Type == Map(type))
-                .Include(q => q.Category)
-                .AsNoTracking()
-                .ToListAsync();
-
+            var transactions = await repository.GetByFilterAsync(q => q.Type == Map(type));
             return transactions.Select(TransactionResponse.Create);
         }
 
@@ -56,49 +40,36 @@ namespace API.Application.Services
                 request.CreatedAt
             );
 
-            context.Transactions.Add(transaction);
-            await context.SaveChangesAsync();
-
+            await repository.CreateAsync(transaction);
             return TransactionResponse.Create(transaction);
         }
 
         public async Task<TransactionResponse> PaidAsync(PayTransactionRequest request)
         {
-            var transaction = await FindAsync(request.Id);
+            var transaction = await repository.GetByIdAsync(request.Id);
             transaction.Pay(request.PaymentDate);
-
-            context.Transactions.Update(transaction);
-            await context.SaveChangesAsync();
-
+            await repository.UpdateAsync(transaction);
             return TransactionResponse.Create(transaction);
         }
 
         public async Task<TransactionResponse> ReopenAsync(Guid id)
         {
-            var transaction = await FindAsync(id);
+            var transaction = await repository.GetByIdAsync(id);
             transaction.Reopen();
-
-            await context.SaveChangesAsync();
-
+            await repository.UpdateAsync(transaction);
             return TransactionResponse.Create(transaction);
         }
 
         public async Task<TransactionResponse> CancelAsync(Guid id)
         {
-            var transaction = await FindAsync(id);
+            var transaction = await repository.GetByIdAsync(id);
             transaction.Cancel();
-
-            context.Transactions.Update(transaction);
-            await context.SaveChangesAsync();
-
+            await repository.UpdateAsync(transaction);
             return TransactionResponse.Create(transaction);
         }
 
         public async Task<TransactionResponse> GetByIdAsync(Guid id)
-            => TransactionResponse.Create(await FindAsync(id));
-
-        private async Task<Transaction> FindAsync(Guid id)
-            => await context.Transactions.Include(q => q.Category).FirstOrDefaultAsync(q => q.Id == id) ?? throw new KeyNotFoundException("Transaction not found");
+            => TransactionResponse.Create(await repository.GetByIdAsync(id));
 
         private static TransactionStatus Map(TransactionStatusDto status) => status switch
         {

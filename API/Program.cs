@@ -1,9 +1,11 @@
 using API.Application.Interfaces;
 using API.Application.Services;
 using API.Data;
+using API.Domain.Repositories;
 using API.Endpoints;
 using API.EndPoints;
 using API.Infrastructure.Handlers;
+using API.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<ITransactionAppService, TransactionAppService>();
 builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
 
