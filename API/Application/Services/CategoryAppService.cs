@@ -1,13 +1,13 @@
 ﻿using API.Application.DTOs.Requests;
 using API.Application.DTOs.Responses;
+using API.Application.Interfaces;
 using API.Data;
 using API.Domain.Entities;
-using API.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Application.Services
 {
-    public class CategoryService(AppDbContext context)
+    public class CategoryAppService(AppDbContext context) : ICategoryAppService
     {
         public async Task<IEnumerable<CategoryResponse>> GetAllAsync()
         {

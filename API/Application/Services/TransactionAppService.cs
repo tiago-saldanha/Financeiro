@@ -1,5 +1,8 @@
 ﻿using API.Application.DTOs.Requests;
 using API.Application.DTOs.Responses;
+using API.Application.Enums;
+using API.Application.Exceptions;
+using API.Application.Interfaces;
 using API.Data;
 using API.Domain.Entities;
 using API.Domain.Enums;
@@ -7,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Application.Services
 {
-    public class TransactionService(AppDbContext context)
+    public class TransactionAppService(AppDbContext context) : ITransactionAppService
     {
         public async Task<IEnumerable<TransactionResponse>> GetAllAsync()
         {
@@ -16,15 +19,14 @@ namespace API.Application.Services
                 .Include(q => q.Category)
                 .AsNoTracking()
                 .ToListAsync();
-            
+
             return transactions.Select(TransactionResponse.Create);
         }
 
-        public async Task<IEnumerable<TransactionResponse>> GetByStatusAsync(string status)
+        public async Task<IEnumerable<TransactionResponse>> GetByStatusAsync(TransactionStatusDto status)
         {
-            var transactionStatus = Enum.Parse<TransactionStatus>(status, true);
             var transactions = await context.Transactions
-                .Where(q => q.Status == transactionStatus)
+                .Where(q => q.Status == Map(status))
                 .Include(q => q.Category)
                 .AsNoTracking()
                 .ToListAsync();
@@ -32,11 +34,10 @@ namespace API.Application.Services
             return transactions.Select(TransactionResponse.Create);
         }
 
-        public async Task<IEnumerable<TransactionResponse>> GetByTypeAsync(string type)
+        public async Task<IEnumerable<TransactionResponse>> GetByTypeAsync(TransactionTypeDto type)
         {
-            var transactionType = Enum.Parse<TransactionType>(type, true);
             var transactions = await context.Transactions
-                .Where(q => q.Type == transactionType)
+                .Where(q => q.Type == Map(type))
                 .Include(q => q.Category)
                 .AsNoTracking()
                 .ToListAsync();
@@ -54,10 +55,10 @@ namespace API.Application.Services
                 request.CategoryId,
                 request.CreatedAt
             );
-            
+
             context.Transactions.Add(transaction);
             await context.SaveChangesAsync();
-            
+
             return TransactionResponse.Create(transaction);
         }
 
@@ -65,10 +66,10 @@ namespace API.Application.Services
         {
             var transaction = await FindAsync(request.Id);
             transaction.Pay(request.PaymentDate);
-            
+
             context.Transactions.Update(transaction);
             await context.SaveChangesAsync();
-            
+
             return TransactionResponse.Create(transaction);
         }
 
@@ -86,17 +87,32 @@ namespace API.Application.Services
         {
             var transaction = await FindAsync(id);
             transaction.Cancel();
-            
+
             context.Transactions.Update(transaction);
             await context.SaveChangesAsync();
-            
+
             return TransactionResponse.Create(transaction);
         }
 
         public async Task<TransactionResponse> GetByIdAsync(Guid id)
             => TransactionResponse.Create(await FindAsync(id));
 
-        private async Task<Transaction> FindAsync(Guid id) 
+        private async Task<Transaction> FindAsync(Guid id)
             => await context.Transactions.Include(q => q.Category).FirstOrDefaultAsync(q => q.Id == id) ?? throw new KeyNotFoundException("Transaction not found");
+
+        private static TransactionStatus Map(TransactionStatusDto status) => status switch
+        {
+            TransactionStatusDto.Pending => TransactionStatus.Pending,
+            TransactionStatusDto.Paid => TransactionStatus.Paid,
+            TransactionStatusDto.Cancelled => TransactionStatus.Cancelled,
+            _ => throw new TransactionStatusAppException()
+        };
+
+        private static TransactionType Map(TransactionTypeDto type) => type switch
+        {
+            TransactionTypeDto.Revenue => TransactionType.Revenue,
+            TransactionTypeDto.Expense => TransactionType.Expense,
+            _ => throw new TransactionTypeAppException()
+        };
     }
 }

@@ -1,3 +1,4 @@
+using API.Application.Interfaces;
 using API.Application.Services;
 using API.Data;
 using API.Endpoints;
@@ -13,8 +14,8 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
-builder.Services.AddScoped<TransactionService>();
-builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<ITransactionAppService, TransactionAppService>();
+builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
 
 var app = builder.Build();
 

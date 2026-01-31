@@ -1,5 +1,5 @@
 ﻿using API.Application.DTOs.Requests;
-using API.Application.Services;
+using API.Application.Interfaces;
 
 namespace API.EndPoints
 {
@@ -9,11 +9,11 @@ namespace API.EndPoints
         {
             var group = builder.MapGroup("/api/categories");
             
-            group.MapGet("/all", async (CategoryService service) => Results.Ok(await service.GetAllAsync()));
+            group.MapGet("/all", async (ICategoryAppService service) => Results.Ok(await service.GetAllAsync()));
             
-            group.MapGet("/{id:guid}", async (Guid id, CategoryService service) => Results.Ok(await service.GetByIdAsync(id)));
+            group.MapGet("/{id:guid}", async (Guid id, ICategoryAppService service) => Results.Ok(await service.GetByIdAsync(id)));
             
-            group.MapPost("/", async (CategoryRequest request, CategoryService service) =>
+            group.MapPost("/", async (CategoryRequest request, ICategoryAppService service) =>
             {
                 var result = await service.CreateAsync(request);
                 return Results.Created($"/api/categories/{result.Id}", result);
