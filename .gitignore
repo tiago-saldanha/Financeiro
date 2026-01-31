@@ -10,3 +10,11 @@
 /API/Financeiro.db-wal
 /API.Tests/bin/Debug/net8.0
 /API.Tests/obj
+/Application/obj
+/Domain/bin/Debug/net8.0
+/Domain/obj
+/Domain.Tests/bin/Debug/net8.0
+/Domain.Tests/obj
+/Infraestructure/bin/Debug/net8.0
+/Infraestructure/obj
+/Application/bin/Debug/net8.0
