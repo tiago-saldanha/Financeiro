@@ -1,4 +1,4 @@
 ﻿namespace API.Application.DTOs.Requests
 {
-    public record PayTransactionRequest(Guid Id, DateTime PaymentDate);
+    public record PayTransactionRequest(DateTime PaymentDate);
 }

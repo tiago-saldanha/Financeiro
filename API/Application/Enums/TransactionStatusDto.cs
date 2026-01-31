@@ -7,7 +7,7 @@ namespace API.Application.Enums
         [Description("Pending")]
         Pending,
 
-        [Description("Pending")]
+        [Description("Paid")]
         Paid,
 
         [Description("Cancelled")]

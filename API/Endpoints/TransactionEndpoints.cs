@@ -19,7 +19,7 @@ namespace API.Endpoints
 
             group.MapGet("/type/{type}", async (ITransactionAppService service, TransactionTypeDto type) => Results.Ok(await service.GetByTypeAsync(type)));
             
-            group.MapPut("/pay/{id:guid}", async (Guid id, PayTransactionRequest request, ITransactionAppService service) => Results.Ok(await service.PaidAsync(request)));
+            group.MapPut("/pay/{id:guid}", async (Guid id, PayTransactionRequest request, ITransactionAppService service) => Results.Ok(await service.PayAsync(id, request)));
 
             group.MapPut("/reopen/{id:Guid}", async (Guid id, ITransactionAppService service) => Results.Ok(await service.ReopenAsync(id)));
             
