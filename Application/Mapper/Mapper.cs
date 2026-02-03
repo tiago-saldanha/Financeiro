@@ -6,25 +6,25 @@ namespace Application.Mapper
 {
     public static class Mapper
     {
-        public static TransactionStatus MapTransactionStatus(TransactionStatusDto status) => status switch
+        public static TransactionStatus TransactionStatus(TransactionStatusDto status) => status switch
         {
-            TransactionStatusDto.Pending => TransactionStatus.Pending,
-            TransactionStatusDto.Paid => TransactionStatus.Paid,
-            TransactionStatusDto.Cancelled => TransactionStatus.Cancelled,
+            TransactionStatusDto.pending => Domain.Enums.TransactionStatus.Pending,
+            TransactionStatusDto.paid => Domain.Enums.TransactionStatus.Paid,
+            TransactionStatusDto.cancelled => Domain.Enums.TransactionStatus.Cancelled,
             _ => throw new TransactionStatusAppException()
         };
 
-        public static TransactionType MapTransactionType(TransactionTypeDto type) => type switch
+        public static TransactionType TransactionType(TransactionTypeDto type) => type switch
         {
-            TransactionTypeDto.Revenue => TransactionType.Revenue,
-            TransactionTypeDto.Expense => TransactionType.Expense,
+            TransactionTypeDto.revenue => Domain.Enums.TransactionType.Revenue,
+            TransactionTypeDto.expense => Domain.Enums.TransactionType.Expense,
             _ => throw new TransactionTypeAppException()
         };
 
-        public static TransactionType MapTransactionType(string transactionType) => transactionType.ToLower() switch
+        public static TransactionType TransactionType(string transactionType) => transactionType.ToLower() switch
         {
-            "revenue" => TransactionType.Revenue,
-            "expense" => TransactionType.Expense,
+            "revenue" => Domain.Enums.TransactionType.Revenue,
+            "expense" => Domain.Enums.TransactionType.Expense,
             _ => throw new TransactionTypeAppException()
         };
     }

@@ -3,6 +3,7 @@ using Application.DTOs.Requests;
 using Application.DTOs.Responses;
 using Application.Interfaces;
 using Domain.Repositories;
+using Application.Exceptions;
 
 namespace Application.Services
 {
@@ -22,7 +23,7 @@ namespace Application.Services
 
         public async Task<CategoryResponse> CreateAsync(CategoryRequest request)
         {
-            if (string.IsNullOrEmpty(request.Name)) throw new InvalidCategoryNameException();
+            if (string.IsNullOrEmpty(request.Name)) throw new CategoryNameAppException();
             var category = Category.Create(request.Name, request.Description);
             await repository.AddAsync(category);
             await unitOfWork.CommitAsync();

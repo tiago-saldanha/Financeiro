@@ -1,13 +1,8 @@
-﻿using System.ComponentModel;
-
-namespace Application.Enums
+﻿namespace Application.Enums
 {
     public enum TransactionTypeDto
     {
-        [Description("Revenue")]
-        Revenue,
-
-        [Description("Expense")]
-        Expense
+        revenue,
+        expense
     }
 }

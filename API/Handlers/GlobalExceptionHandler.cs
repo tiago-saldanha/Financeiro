@@ -1,4 +1,4 @@
-﻿using Application.Services;
+﻿using Application.Exceptions;
 using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,9 @@ public class GlobalExceptionHandler : IExceptionHandler
 
         switch (exception)
         {
-            case InvalidCategoryNameException:
+            case CategoryNameAppException:
+            case TransactionTypeAppException:
+            case TransactionStatusAppException:
                 problemDetails.Status = StatusCodes.Status400BadRequest;
                 problemDetails.Title = "Regra de Negócio violada";
                 problemDetails.Detail = exception.Message;

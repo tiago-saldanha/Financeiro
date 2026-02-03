@@ -19,13 +19,13 @@ namespace Application.Services
 
         public async Task<IEnumerable<TransactionResponse>> GetByStatusAsync(TransactionStatusDto status)
         {
-            var transactions = await repository.GetByFilterAsync(q => q.Status == Mapper.Mapper.MapTransactionStatus(status));
+            var transactions = await repository.GetByFilterAsync(q => q.Status == Mapper.Mapper.TransactionStatus(status));
             return transactions.Select(TransactionResponse.Create);
         }
 
         public async Task<IEnumerable<TransactionResponse>> GetByTypeAsync(TransactionTypeDto type)
         {
-            var transactions = await repository.GetByFilterAsync(q => q.Type == Mapper.Mapper.MapTransactionType(type));
+            var transactions = await repository.GetByFilterAsync(q => q.Type == Mapper.Mapper.TransactionType(type));
             return transactions.Select(TransactionResponse.Create);
         }
 

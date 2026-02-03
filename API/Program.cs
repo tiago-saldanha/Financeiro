@@ -1,24 +1,11 @@
-using API.Endpoints;
-using API.Handlers;
-using CrossCutting;
+using API.Configure;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.AddDependencies();
+var builder = WebApplication
+    .CreateBuilder(args)
+    .AddServices();
 
-var app = builder.Build();
-
-app.UseExceptionHandler();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.MapCategoryEndpoints();
-app.MapTransactionEndpoints();
+var app = builder
+    .Build()
+    .Setup();
 
 app.Run();

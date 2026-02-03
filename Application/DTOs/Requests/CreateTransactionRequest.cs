@@ -24,6 +24,6 @@ namespace Application.DTOs.Requests
             );
         }
 
-        private TransactionType Map(string transactionType) => Mapper.Mapper.MapTransactionType(transactionType);
+        private TransactionType Map(string transactionType) => Mapper.Mapper.TransactionType(transactionType);
     }
 }
