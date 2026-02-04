@@ -2,7 +2,7 @@
 
 namespace Domain.ValueObjects
 {
-    public sealed record class Money
+    public readonly record struct Money
     {
         public decimal Value { get; }
 

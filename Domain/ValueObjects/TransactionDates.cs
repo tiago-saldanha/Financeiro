@@ -2,7 +2,7 @@
 
 namespace Domain.ValueObjects
 {
-    public sealed record class TransactionDates
+    public readonly record struct TransactionDates
     {
         public DateTime DueDate { get; }
         public DateTime CreatedAt { get; }

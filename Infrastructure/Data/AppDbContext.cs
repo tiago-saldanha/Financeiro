@@ -17,6 +17,7 @@ namespace Infrastructure.Data
 
                 builder.Property(c => c.Name)
                     .IsRequired()
+                    .HasConversion(description => description.Value, value => new Description(value))
                     .HasMaxLength(60);
 
                 builder.Property(c => c.Description)
@@ -37,11 +38,8 @@ namespace Infrastructure.Data
                     .HasConversion(description => description.Value, value => new Description(value))
                     .HasMaxLength(100);
 
-                builder.OwnsOne(t => t.Dates, dates => 
-                {
-                    dates.Property(d => d.CreatedAt);
-                    dates.Property(d => d.DueDate);
-                });
+                builder.ComplexProperty(t => t.Dates, dates => dates.Property(d => d.CreatedAt));
+                builder.ComplexProperty(t => t.Dates, dates => dates.Property(d => d.DueDate));
 
                 builder.Property(t => t.Amount)
                     .IsRequired()

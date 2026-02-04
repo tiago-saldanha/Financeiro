@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using Domain.ValueObjects;
+
+namespace Domain.Entities
 {
     public class Category
     {
@@ -6,7 +8,7 @@
         {
         }
 
-        private Category(Guid id, string name, string? description)
+        private Category(Guid id, Description name, string? description)
         {
             Id = id;
             Name = name;
@@ -17,15 +19,14 @@
         {
             return new Category(
                 Guid.NewGuid(),
-                name,
+                new Description(name),
                 description
             );
         }
 
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
+        public Description Name { get; private set; }
         public string? Description { get; private set; }
-
         public virtual ICollection<Transaction> Transactions { get; set; } = [];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Domain.ValueObjects
 {
-    public sealed record class Description
+    public readonly record struct Description
     {
         public string Value { get; }
 
