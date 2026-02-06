@@ -7,7 +7,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
     public class GetByIdAsyncTests : TransactionAppServiceBaseTests
     {
         [Fact]
-        public async Task WhenTransactionExists_ShouldReturnTransaction()
+        public async Task GetByIdAsync_WhenTransactionExists_ShouldReturnTransaction()
         {
             var transaction = Transaction.Create("Description", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);
             _repositoryMock.Setup(r => r.GetByIdAsync(transaction.Id)).ReturnsAsync(transaction);

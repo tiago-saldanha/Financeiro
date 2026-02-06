@@ -1,13 +1,9 @@
-﻿using System.Linq.Expressions;
-using Application.DTOs.Requests;
+﻿using Application.DTOs.Requests;
 using Application.DTOs.Responses;
 using Application.Enums;
 using Application.Exceptions;
-using Application.Services;
 using Application.Tests.Services.TransactionAppServiceTests;
 using Domain.Entities;
-using Domain.Enums;
-using Domain.Repositories;
 using Moq;
 
 namespace Application.Tests.Services
@@ -15,7 +11,7 @@ namespace Application.Tests.Services
     public class CreateAsyncTests : TransactionAppServiceBaseTests
     {
         [Fact]
-        public async Task WhenRequestIsValid_ShouldCreateTransaction()
+        public async Task CreateAsync_WhenRequestIsValid_ShouldCreateTransaction()
         {
             var request = new CreateTransactionRequest
             {
@@ -43,7 +39,7 @@ namespace Application.Tests.Services
         }
 
         [Fact]
-        public async Task WhenRequestIsInvalid_ShouldRaiseTransactionTypeAppException()
+        public async Task CreateAsync_WhenTransactionTypeIsInvalid_ShouldThrowTransactionTypeAppException()
         {
             var request = new CreateTransactionRequest
             {

@@ -11,7 +11,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
     public class PayAsyncTests : TransactionAppServiceBaseTests
     {
         [Fact]
-        public async Task WhenTransactionIsPending_ShouldMarkAsPaid()
+        public async Task PayAsync_WhenTransactionIsPending_ShouldMarkAsPaid()
         {
             var request = new PayTransactionRequest(Today);
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);
@@ -28,7 +28,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
         }
 
         [Fact]
-        public async Task WhenTransactionIsCancelled_ShouldRaiseTransactionPayException()
+        public async Task PayAsync_WhenTransactionIsCancelled_ShouldThrowTransactionPayException()
         {
             var request = new PayTransactionRequest(Today);
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);
@@ -42,7 +42,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
         }
 
         [Fact]
-        public async Task WhenTransactionIsPaid_ShouldRaiseTransactionPayException()
+        public async Task PayAsync_WhenTransactionIsAlreadyPaid_ShouldThrowTransactionPayException()
         {
             var request = new PayTransactionRequest(Today);
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Yesterday);
@@ -56,7 +56,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
         }
 
         [Fact]
-        public async Task WhenPaymentDateIsLessThenCreatedAt_ShouldRaiseTransactionPayException()
+        public async Task PayAsync_WhenPaymentDateIsBeforeCreatedAt_ShouldThrowTransactionPayException()
         {
             var request = new PayTransactionRequest(Yesterday);
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);

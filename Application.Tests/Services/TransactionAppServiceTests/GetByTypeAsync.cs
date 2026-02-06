@@ -9,7 +9,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
     public class GetByTypeAsync : TransactionAppServiceBaseTests
     {
         [Fact]
-        public async Task WhenTypeIsProvided_ShouldReturnMatchingTransactions()
+        public async Task GetByTypeAsync_WhenTypeIsProvided_ShouldReturnMatchingTransactions()
         {
             var transactions = new List<Transaction>()
             {

@@ -12,7 +12,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
     public class ReopenAsyncTests : TransactionAppServiceBaseTests
     {
         [Fact]
-        public async Task WhenTransactionIsPaid_ShouldMarkAsPending()
+        public async Task ReopenAsync_WhenTransactionIsPaid_ShouldMarkAsPending()
         {
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);
             transaction.Pay(Today);
@@ -29,7 +29,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
         }
 
         [Fact]
-        public async Task WhenTransactionNotIsPaid_ShouldRaiseTransactionReopenException()
+        public async Task ReopenAsync_WhenTransactionIsNotPaid_ShouldThrowTransactionReopenException()
         {
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);
             _repositoryMock.Setup(r => r.GetByIdAsync(transaction.Id)).ReturnsAsync(transaction);

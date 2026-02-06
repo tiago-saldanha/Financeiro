@@ -10,7 +10,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
     public class CancelAsyncTests : TransactionAppServiceBaseTests
     {
         [Fact]
-        public async Task WhenTransactionIsPending_ShouldMarkAsCancelled()
+        public async Task CancelAsync_WhenTransactionIsPending_ShouldMarkAsCancelled()
         {
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);
             _repositoryMock.Setup(r => r.GetByIdAsync(transaction.Id)).ReturnsAsync(transaction);
@@ -26,7 +26,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
         }
 
         [Fact]
-        public async Task WhenTransactionIsPaid_ShouldRaiseTransactionCancelException()
+        public async Task CancelAsync_WhenTransactionIsPaid_ShouldThrowTransactionCancelException()
         {
             var transaction = Transaction.Create("Description 1", 100, Tomorrow, TransactionType.Revenue, Guid.Empty, Today);
             transaction.Pay(Tomorrow);

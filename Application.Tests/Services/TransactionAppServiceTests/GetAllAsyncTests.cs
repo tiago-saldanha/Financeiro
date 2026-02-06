@@ -7,7 +7,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
     public class GetAllAsyncTests : TransactionAppServiceBaseTests
     {
         [Fact]
-        public async Task WhenTransactionsExist_ShouldReturnAllTransactions()
+        public async Task GetAllAsync_WhenTransactionsExist_ShouldReturnAllTransactions()
         {
             var transactions = new List<Transaction>()
             {
@@ -29,7 +29,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
         }
 
         [Fact]
-        public async Task WhenTransactionsNotExist_ShouldReturnEmptyListTransactions()
+        public async Task GetAllAsync_WhenNoTransactionsExist_ShouldReturnEmptyList()
         {
             _repositoryMock.Setup(r => r.GetAllAsync()).ReturnsAsync([]);
 
