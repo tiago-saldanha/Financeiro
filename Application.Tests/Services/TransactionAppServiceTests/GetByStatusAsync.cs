@@ -17,7 +17,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
                 Transaction.Create("Description 2", 200, Tomorrow, TransactionType.Expense, Guid.Empty, Today)
             };
 
-            var status = TransactionStatusDto.pending;
+            var status = TransactionStatusDto.Pending;
             _repositoryMock.Setup(r => r.GetByFilterAsync(It.IsAny<Expression<Func<Transaction, bool>>>())).ReturnsAsync(transactions);
             var result = await _service.GetByStatusAsync(status);
             _repositoryMock.Verify(r => r.GetByFilterAsync(It.IsAny<Expression<Func<Transaction, bool>>>()), Times.Once);

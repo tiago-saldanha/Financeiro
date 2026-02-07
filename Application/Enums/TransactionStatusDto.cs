@@ -2,8 +2,8 @@
 {
     public enum TransactionStatusDto
     {
-        pending,
-        paid,
-        cancelled
+        Pending,
+        Paid,
+        Cancelled
     }
 }

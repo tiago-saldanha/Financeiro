@@ -6,9 +6,9 @@ namespace Application.Tests.Mapper
         [Fact]
         public void TransactionStatus_WhenDtoIsValid_ShouldMapToDomainStatus()
         {
-            var pendingDto = Enums.TransactionStatusDto.pending;
-            var paidDto = Enums.TransactionStatusDto.paid;
-            var cancelledDto = Enums.TransactionStatusDto.cancelled;
+            var pendingDto = Enums.TransactionStatusDto.Pending;
+            var paidDto = Enums.TransactionStatusDto.Paid;
+            var cancelledDto = Enums.TransactionStatusDto.Cancelled;
             
             var pendingStatus = Application.Mapper.Mapper.TransactionStatus(pendingDto);
             var paidStatus = Application.Mapper.Mapper.TransactionStatus(paidDto);
@@ -22,8 +22,8 @@ namespace Application.Tests.Mapper
         [Fact]
         public void TransactionType_WhenDtoIsValid_ShouldMapToDomainType()
         {
-            var revenue = Enums.TransactionTypeDto.revenue;
-            var expense = Enums.TransactionTypeDto.expense;
+            var revenue = Enums.TransactionTypeDto.Revenue;
+            var expense = Enums.TransactionTypeDto.Expense;
 
             var revenueType = Application.Mapper.Mapper.TransactionType(revenue);
             var expenseType = Application.Mapper.Mapper.TransactionType(expense);

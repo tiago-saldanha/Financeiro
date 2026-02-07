@@ -30,7 +30,7 @@ namespace Application.Tests.Services
             Assert.IsType<TransactionResponse>(result);
             Assert.NotEqual(Guid.Empty, result.Id);
             Assert.Null(result.PaymentDate);
-            Assert.Equal(TransactionStatusDto.pending.ToString(), result.Status.ToLower());
+            Assert.Equal(TransactionStatusDto.Pending.ToString(), result.Status);
             Assert.Equal(request.Description, result.Description);
             Assert.Equal(request.Amount, result.Amount);
             Assert.Equal(request.DueDate, result.DueDate);

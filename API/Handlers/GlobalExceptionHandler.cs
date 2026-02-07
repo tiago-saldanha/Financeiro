@@ -15,6 +15,8 @@ public class GlobalExceptionHandler : IExceptionHandler
             Instance = httpContext.Request.Path
         };
 
+        var message = exception.InnerException != null ? $"{exception.Message}: {exception.InnerException.Message}" : $"{exception.Message}";
+
         switch (exception)
         {
             case CategoryNameAppException:
@@ -26,18 +28,18 @@ public class GlobalExceptionHandler : IExceptionHandler
             case TransactionCancelException:
                 problemDetails.Status = StatusCodes.Status400BadRequest;
                 problemDetails.Title = "Regra de Negócio violada";
-                problemDetails.Detail = exception.Message;
+                problemDetails.Detail = message;
                 break;
             case EntityNotFoundInfraException:
                 problemDetails.Status = StatusCodes.Status404NotFound;
                 problemDetails.Title = "Recurso não encontrado";
-                problemDetails.Detail = exception.Message;
+                problemDetails.Detail = message;
                 break;
 
             default:
                 problemDetails.Status = StatusCodes.Status500InternalServerError;
                 problemDetails.Title = "Erro interno no servidor";
-                problemDetails.Detail = $"Ocorreu um erro inesperado: {exception.Message}";
+                problemDetails.Detail = $"Ocorreu um erro inesperado: {message}";
                 break;
         }
 

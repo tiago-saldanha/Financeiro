@@ -27,7 +27,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
             Assert.IsType<TransactionResponse>(result);
             Assert.Equal(transaction.Id, result.Id);
             Assert.Null(result.PaymentDate);
-            Assert.Equal(TransactionStatusDto.pending.ToString(), result.Status.ToLower());
+            Assert.Equal(TransactionStatusDto.Pending.ToString(), result.Status);
         }
 
         [Fact]

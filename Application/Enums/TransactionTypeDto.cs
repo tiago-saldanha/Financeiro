@@ -2,7 +2,7 @@
 {
     public enum TransactionTypeDto
     {
-        revenue,
-        expense
+        Revenue,
+        Expense
     }
 }

@@ -8,16 +8,16 @@ namespace Application.Mapper
     {
         public static TransactionStatus TransactionStatus(TransactionStatusDto status) => status switch
         {
-            TransactionStatusDto.pending => Domain.Enums.TransactionStatus.Pending,
-            TransactionStatusDto.paid => Domain.Enums.TransactionStatus.Paid,
-            TransactionStatusDto.cancelled => Domain.Enums.TransactionStatus.Cancelled,
+            TransactionStatusDto.Pending => Domain.Enums.TransactionStatus.Pending,
+            TransactionStatusDto.Paid => Domain.Enums.TransactionStatus.Paid,
+            TransactionStatusDto.Cancelled => Domain.Enums.TransactionStatus.Cancelled,
             _ => throw new TransactionStatusAppException()
         };
 
         public static TransactionType TransactionType(TransactionTypeDto type) => type switch
         {
-            TransactionTypeDto.revenue => Domain.Enums.TransactionType.Revenue,
-            TransactionTypeDto.expense => Domain.Enums.TransactionType.Expense,
+            TransactionTypeDto.Revenue => Domain.Enums.TransactionType.Revenue,
+            TransactionTypeDto.Expense => Domain.Enums.TransactionType.Expense,
             _ => throw new TransactionTypeAppException()
         };
 

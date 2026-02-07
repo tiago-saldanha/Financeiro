@@ -23,7 +23,6 @@ namespace Infrastructure.Repositories
         {
             throw ex switch
             {
-                DbUpdateException => new EntityAlreadyExistsInfraException(),
                 _ => ex,
             };
         }
