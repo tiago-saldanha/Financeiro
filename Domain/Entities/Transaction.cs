@@ -57,7 +57,7 @@ namespace Domain.Entities
             PaymentDate = paymentDate;
             Status = TransactionStatus.Paid;
 
-            AddDomainEvent(new TransactionPaidEvent(CategoryId, paymentDate));
+            AddDomainEvent(new TransactionPaidEvent(Id, paymentDate));
         }
 
         public void Reopen()
@@ -67,15 +67,22 @@ namespace Domain.Entities
 
             Status = TransactionStatus.Pending;
             PaymentDate = null;
+
+            AddDomainEvent(new TransactionReopenEvent(Id, Status));
         }
 
         public void Cancel()
         {
+            if (Status == TransactionStatus.Cancelled)
+                throw new TransactionCancelException("Não é possível cancelar uma transação que já foi cancelada");
+
             if (Status == TransactionStatus.Paid)
-                throw new TransactionCancelException();
+                throw new TransactionCancelException("Não é possível cancelar uma transação que já foi paga");
 
             Status = TransactionStatus.Cancelled;
             PaymentDate = null;
+
+            AddDomainEvent(new TransactionCancelEvent(Id, Status));
         }
 
         public bool IsOverdue(DateTime today) => Status == TransactionStatus.Pending && today.Date > Dates.DueDate.Date;

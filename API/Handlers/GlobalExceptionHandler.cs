@@ -1,4 +1,5 @@
 ﻿using Application.Exceptions;
+using Domain.Exceptions;
 using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,9 @@ public class GlobalExceptionHandler : IExceptionHandler
             case TransactionTypeAppException:
             case TransactionStatusAppException:
             case EntityAlreadyExistsInfraException:
+            case TransactionPayException:
+            case TransactionReopenException:
+            case TransactionCancelException:
                 problemDetails.Status = StatusCodes.Status400BadRequest;
                 problemDetails.Title = "Regra de Negócio violada";
                 problemDetails.Detail = exception.Message;

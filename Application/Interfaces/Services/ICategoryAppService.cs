@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.Requests;
 using Application.DTOs.Responses;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Services
 {
     public interface ICategoryAppService
     {

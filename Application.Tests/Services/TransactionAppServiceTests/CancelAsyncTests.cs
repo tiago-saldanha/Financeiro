@@ -3,6 +3,7 @@ using Application.Enums;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
+using Domain.Interfaces;
 using Moq;
 
 namespace Application.Tests.Services.TransactionAppServiceTests
@@ -19,6 +20,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
 
             _repositoryMock.Verify(r => r.Update(transaction), Times.Once);
             _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
+            _dispatcherMock.Verify(d => d.DispatchAsync(It.IsAny<IEnumerable<IDomainEvent>>()), Times.Once);
             Assert.IsType<TransactionResponse>(result);
             Assert.Equal(transaction.Id, result.Id);
             Assert.Null(result.PaymentDate);
@@ -33,6 +35,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
             _repositoryMock.Setup(r => r.GetByIdAsync(transaction.Id)).ReturnsAsync(transaction);
 
             await Assert.ThrowsAsync<TransactionCancelException>(() => _service.CancelAsync(transaction.Id));
+            _dispatcherMock.Verify(d => d.DispatchAsync(It.IsAny<IEnumerable<IDomainEvent>>()), Times.Never);
             Assert.Equal(TransactionStatus.Paid, transaction.Status);
             Assert.Equal(Tomorrow, transaction.PaymentDate);
         }

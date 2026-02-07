@@ -32,6 +32,17 @@ namespace Domain.Tests.Entities
         }
 
         [Fact]
+        public void Cancel_WhenTransactionIsCancelled_ShouldThrowTransactionCancelException()
+        {
+            var sut = Transaction.Create("Test", 100.0M, Tomorrow, TransactionType.Expense, Guid.NewGuid(), Tomorrow);
+            sut.Cancel();
+
+            Assert.Throws<TransactionCancelException>(() => sut.Cancel());
+            Assert.Equal(TransactionStatus.Cancelled, sut.Status);
+            Assert.Null(sut.PaymentDate);
+        }
+
+        [Fact]
         public void Cancel_WhenTransactionIsPendingAfterReopen_ShouldMarkAsCancelled()
         {
             var sut = Transaction.Create("Test", 100.0M, Tomorrow, TransactionType.Expense, Guid.NewGuid(), Tomorrow);

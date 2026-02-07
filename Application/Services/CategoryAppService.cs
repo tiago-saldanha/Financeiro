@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 using Application.DTOs.Requests;
 using Application.DTOs.Responses;
-using Application.Interfaces;
 using Domain.Repositories;
 using Application.Exceptions;
+using Application.Interfaces.Services;
 
 namespace Application.Services
 {

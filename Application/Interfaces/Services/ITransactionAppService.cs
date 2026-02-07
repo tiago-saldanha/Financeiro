@@ -2,7 +2,7 @@
 using Application.DTOs.Responses;
 using Application.Enums;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Services
 {
     public interface ITransactionAppService
     {

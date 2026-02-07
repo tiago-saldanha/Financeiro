@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Requests;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 
 namespace API.Endpoints
 {

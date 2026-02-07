@@ -4,6 +4,7 @@ using Application.Enums;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
+using Domain.Interfaces;
 using Moq;
 
 namespace Application.Tests.Services.TransactionAppServiceTests
@@ -21,6 +22,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
 
             _repositoryMock.Verify(r => r.Update(transaction), Times.Once);
             _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
+            _dispatcherMock.Verify(d => d.DispatchAsync(It.IsAny<IEnumerable<IDomainEvent>>()), Times.Once);
             Assert.IsType<TransactionResponse>(result);
             Assert.Equal(transaction.Id, result.Id);
             Assert.Equal(Today, result.PaymentDate);
@@ -36,7 +38,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
             _repositoryMock.Setup(r => r.GetByIdAsync(transaction.Id)).ReturnsAsync(transaction);
 
             await Assert.ThrowsAsync<TransactionPayException>(() => _service.PayAsync(transaction.Id, request));
-
+            _dispatcherMock.Verify(d => d.DispatchAsync(It.IsAny<IEnumerable<IDomainEvent>>()), Times.Never);
             Assert.Equal(TransactionStatus.Cancelled, transaction.Status);
             Assert.Null(transaction.PaymentDate);
         }
@@ -50,7 +52,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
             _repositoryMock.Setup(r => r.GetByIdAsync(transaction.Id)).ReturnsAsync(transaction);
 
             await Assert.ThrowsAsync<TransactionPayException>(() => _service.PayAsync(transaction.Id, request));
-
+            _dispatcherMock.Verify(d => d.DispatchAsync(It.IsAny<IEnumerable<IDomainEvent>>()), Times.Never);
             Assert.Equal(TransactionStatus.Paid, transaction.Status);
             Assert.Equal(Yesterday, transaction.PaymentDate);
         }
@@ -63,7 +65,7 @@ namespace Application.Tests.Services.TransactionAppServiceTests
             _repositoryMock.Setup(r => r.GetByIdAsync(transaction.Id)).ReturnsAsync(transaction);
 
             await Assert.ThrowsAsync<TransactionPayException>(() => _service.PayAsync(transaction.Id, request));
-            
+            _dispatcherMock.Verify(d => d.DispatchAsync(It.IsAny<IEnumerable<IDomainEvent>>()), Times.Never);
             Assert.Equal(TransactionStatus.Pending, transaction.Status);
             Assert.Null(transaction.PaymentDate);
         }

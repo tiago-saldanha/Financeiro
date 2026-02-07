@@ -2,11 +2,12 @@
 using Application.DTOs.Requests;
 using Application.DTOs.Responses;
 using Application.Enums;
-using Application.Interfaces;
+using Application.Interfaces.Services;
+using Application.Interfaces.Dispatchers;
 
 namespace Application.Services
 {
-    public class TransactionAppService(ITransactionRepository repository, IUnitOfWork unitOfWork) : ITransactionAppService
+    public class TransactionAppService(ITransactionRepository repository, IUnitOfWork unitOfWork, IDomainEventDispatcher dispatcher) : ITransactionAppService
     {
         public async Task<TransactionResponse> GetByIdAsync(Guid id)
             => TransactionResponse.Create(await repository.GetByIdAsync(id));
@@ -35,6 +36,7 @@ namespace Application.Services
             transaction.Pay(request.PaymentDate);
             repository.Update(transaction);
             await unitOfWork.CommitAsync();
+            await dispatcher.DispatchAsync(transaction.DomainEvents);
             return TransactionResponse.Create(transaction);
         }
 
@@ -44,6 +46,7 @@ namespace Application.Services
             transaction.Reopen();
             repository.Update(transaction);
             await unitOfWork.CommitAsync();
+            await dispatcher.DispatchAsync(transaction.DomainEvents);
             return TransactionResponse.Create(transaction);
         }
 
@@ -53,6 +56,7 @@ namespace Application.Services
             transaction.Cancel();
             repository.Update(transaction);
             await unitOfWork.CommitAsync();
+            await dispatcher.DispatchAsync(transaction.DomainEvents);
             return TransactionResponse.Create(transaction);
         }
 
