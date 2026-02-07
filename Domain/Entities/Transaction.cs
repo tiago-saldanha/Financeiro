@@ -1,10 +1,12 @@
-﻿using Domain.Enums;
+﻿using Domain.Abstractions;
+using Domain.Enums;
+using Domain.Events;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public class Transaction
+    public class Transaction : Entity
     {
         protected Transaction() { }
 
@@ -54,6 +56,8 @@ namespace Domain.Entities
 
             PaymentDate = paymentDate;
             Status = TransactionStatus.Paid;
+
+            AddDomainEvent(new TransactionPaidEvent(CategoryId, paymentDate));
         }
 
         public void Reopen()
