@@ -9,9 +9,11 @@ namespace API.Endpoints
         {
             var group = builder.MapGroup("/api/categories");
             
-            group.MapGet("/all", async (ICategoryAppService service) => Results.Ok(await service.GetAllAsync()));
+            group.MapGet("/all", async (ICategoryAppService service) 
+                => Results.Ok(await service.GetAllAsync()));
             
-            group.MapGet("/{id:guid}", async (Guid id, ICategoryAppService service) => Results.Ok(await service.GetByIdAsync(id)));
+            group.MapGet("/{id:guid}", async (Guid id, ICategoryAppService service) 
+                => Results.Ok(await service.GetByIdAsync(id)));
             
             group.MapPost("/", async (CategoryRequest request, ICategoryAppService service) =>
             {
