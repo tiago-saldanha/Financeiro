@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
+using Domain.Services;
 
 namespace Application.DTOs.Responses
 {
@@ -10,30 +10,20 @@ namespace Application.DTOs.Responses
         public string? Description { get; private set; }
         public CategoryTotal Total { get; private set; }
 
-        public static CategoryResponse Create(Category category)
+        public static CategoryResponse Create(Category category, CategoryTotalService categoryTotalService)
         {
-            return new CategoryResponse
+            var categoryBalance = categoryTotalService.Calculate(category);
+            var categoryTotal = new CategoryTotal(categoryBalance.Received, categoryBalance.Spent, categoryBalance.Balance);
+            
+            var response = new CategoryResponse
             {
                 Id = category.Id,
                 Name = category.Name,
-                Description = category?.Description,
-                Total = CalculateTotal(category!)
+                Description = category.Description,
+                Total = categoryTotal
             };
-        }
 
-        private static CategoryTotal CalculateTotal(Category category)
-        {
-            var received = category.Transactions
-                .Where(t => t.Type == TransactionType.Revenue)
-                .Sum(t => t.Amount);
-
-            var spent = category.Transactions
-                .Where(t => t.Type == TransactionType.Expense)
-                .Sum(t => t.Amount);
-
-            var total = received - spent;
-
-            return new CategoryTotal(received, spent, total);
+            return response;
         }
     }
 }

@@ -4,6 +4,7 @@ using Application.DTOs.Responses;
 using Domain.Repositories;
 using Application.Exceptions;
 using Application.Interfaces.Services;
+using Domain.Services;
 
 namespace Application.Services
 {
@@ -12,13 +13,15 @@ namespace Application.Services
         public async Task<IEnumerable<CategoryResponse>> GetAllAsync()
         {
             var categories = await repository.GetAllAsync();
-            return categories.Select(CategoryResponse.Create);
+            var categoryTotalService = new CategoryTotalService();
+            return categories.Select(x => CategoryResponse.Create(x, categoryTotalService));
         }
 
         public async Task<CategoryResponse> GetByIdAsync(Guid id)
         {
             var category = await repository.GetByIdAsync(id);
-            return CategoryResponse.Create(category);
+            var categoryTotalService = new CategoryTotalService();
+            return CategoryResponse.Create(category, categoryTotalService);
         }
 
         public async Task<CategoryResponse> CreateAsync(CategoryRequest request)
@@ -27,7 +30,8 @@ namespace Application.Services
             var category = Category.Create(request.Name, request.Description);
             await repository.AddAsync(category);
             await unitOfWork.CommitAsync();
-            return CategoryResponse.Create(category);
+            var categoryTotalService = new CategoryTotalService();
+            return CategoryResponse.Create(category, categoryTotalService);
         }
     }
 }
