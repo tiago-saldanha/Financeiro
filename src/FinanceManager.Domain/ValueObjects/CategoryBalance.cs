@@ -1,4 +1,4 @@
-﻿namespace Domain.ValueObjects
+﻿namespace FinanceManager.Domain.ValueObjects
 {
     public readonly record struct CategoryBalance
     {

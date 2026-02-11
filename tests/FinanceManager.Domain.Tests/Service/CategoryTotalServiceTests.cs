@@ -1,9 +1,9 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using Domain.Services;
-using Domain.ValueObjects;
+﻿using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Enums;
+using FinanceManager.Domain.Services;
+using FinanceManager.Domain.ValueObjects;
 
-namespace Domain.Tests.Service
+namespace FinanceManager.Domain.Tests.Service
 {
     public class CategoryTotalServiceTests
     {

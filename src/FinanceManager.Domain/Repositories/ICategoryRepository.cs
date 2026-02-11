@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using FinanceManager.Domain.Entities;
 
-namespace Domain.Repositories
+namespace FinanceManager.Domain.Repositories
 {
     public interface ICategoryRepository
     {

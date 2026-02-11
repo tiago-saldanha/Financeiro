@@ -1,10 +1,10 @@
-﻿using Domain.Abstractions;
-using Domain.Enums;
-using Domain.Events;
-using Domain.Exceptions;
-using Domain.ValueObjects;
+﻿using FinanceManager.Domain.Abstractions;
+using FinanceManager.Domain.Enums;
+using FinanceManager.Domain.Events;
+using FinanceManager.Domain.Exceptions;
+using FinanceManager.Domain.ValueObjects;
 
-namespace Domain.Entities
+namespace FinanceManager.Domain.Entities
 {
     public class Transaction : Entity
     {

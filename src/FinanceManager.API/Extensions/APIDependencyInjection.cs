@@ -4,7 +4,7 @@ using Application.Dispatchers;
 using Application.Handlers;
 using Application.Interfaces.Dispatchers;
 using Application.Interfaces.Handlers;
-using Domain.Events;
+using FinanceManager.Domain.Events;
 
 namespace FinanceManager.API.Extensions
 {

@@ -1,4 +1,4 @@
-﻿using Domain.Enums;
+﻿using FinanceManager.Domain.Enums;
 using Application.Exceptions;
 using Application.Enums;
 

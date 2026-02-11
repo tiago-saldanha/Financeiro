@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
-using Domain.Exceptions;
+﻿using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Exceptions;
 
-namespace Domain.Tests.Entities
+namespace FinanceManager.Domain.Tests.Entities
 {
     public class CategoryCreationTests
     {

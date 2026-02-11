@@ -1,6 +1,6 @@
-﻿using Domain.Interfaces;
+﻿using FinanceManager.Domain.Interfaces;
 
-namespace Domain.Abstractions
+namespace FinanceManager.Domain.Abstractions
 {
     public abstract class DomainEvent : IDomainEvent
     {

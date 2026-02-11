@@ -1,6 +1,6 @@
-﻿using Domain.ValueObjects;
+﻿using FinanceManager.Domain.ValueObjects;
 
-namespace Domain.Entities
+namespace FinanceManager.Domain.Entities
 {
     public class Category
     {

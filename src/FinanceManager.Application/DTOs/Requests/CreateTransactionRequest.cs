@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using Domain.Enums;
+﻿using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Enums;
 
 namespace Application.DTOs.Requests
 {

@@ -1,4 +1,4 @@
-﻿namespace Domain.Repositories
+﻿namespace FinanceManager.Domain.Repositories
 {
     public interface IUnitOfWork
     {

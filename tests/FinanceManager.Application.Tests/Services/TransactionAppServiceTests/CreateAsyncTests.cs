@@ -2,7 +2,7 @@
 using Application.DTOs.Responses;
 using Application.Enums;
 using Application.Exceptions;
-using Domain.Entities;
+using FinanceManager.Domain.Entities;
 using Moq;
 
 namespace Application.Tests.Services.TransactionAppServiceTests

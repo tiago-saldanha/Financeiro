@@ -1,4 +1,4 @@
-﻿namespace Domain.Exceptions
+﻿namespace FinanceManager.Domain.Exceptions
 {
     public class TransactionPayException : Exception
     {

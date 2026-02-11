@@ -1,7 +1,7 @@
-using Domain.Entities;
-using Domain.Enums;
+using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Enums;
 
-namespace Domain.Tests.Entities
+namespace FinanceManager.Domain.Tests.Entities
 {
     public class TransactionOverdueTests : TransactionBaseTests
     {

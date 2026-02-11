@@ -1,7 +1,7 @@
 ﻿using Application.Dispatchers;
 using Application.Interfaces.Dispatchers;
 using Application.Services;
-using Domain.Repositories;
+using FinanceManager.Domain.Repositories;
 using Moq;
 
 namespace Application.Tests.Services.TransactionAppServiceTests

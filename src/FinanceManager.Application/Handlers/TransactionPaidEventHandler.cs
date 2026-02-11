@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Handlers;
-using Domain.Events;
+using FinanceManager.Domain.Events;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Handlers

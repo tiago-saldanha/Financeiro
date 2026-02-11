@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
+﻿using FinanceManager.Domain.Entities;
 using Application.DTOs.Requests;
 using Application.DTOs.Responses;
-using Domain.Repositories;
+using FinanceManager.Domain.Repositories;
 using Application.Exceptions;
 using Application.Interfaces.Services;
-using Domain.Services;
+using FinanceManager.Domain.Services;
 
 namespace Application.Services
 {

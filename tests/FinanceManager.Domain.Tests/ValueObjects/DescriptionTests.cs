@@ -1,7 +1,7 @@
-﻿using Domain.Exceptions;
-using Domain.ValueObjects;
+﻿using FinanceManager.Domain.Exceptions;
+using FinanceManager.Domain.ValueObjects;
 
-namespace Domain.Tests.ValueObjects
+namespace FinanceManager.Domain.Tests.ValueObjects
 {
     public class DescriptionTests
     {

@@ -1,7 +1,7 @@
-﻿using Domain.Abstractions;
-using Domain.Enums;
+﻿using FinanceManager.Domain.Abstractions;
+using FinanceManager.Domain.Enums;
 
-namespace Domain.Events
+namespace FinanceManager.Domain.Events
 {
     public class TransactionCancelEvent(Guid transactionId, TransactionStatus status) : DomainEvent
     {

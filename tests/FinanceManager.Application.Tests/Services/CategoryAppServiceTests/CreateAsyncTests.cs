@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.Requests;
 using Application.Exceptions;
-using Domain.Entities;
+using FinanceManager.Domain.Entities;
 using Moq;
 
 namespace Application.Tests.Services.CategoryAppServiceTests

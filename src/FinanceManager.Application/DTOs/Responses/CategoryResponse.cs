@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using Domain.Services;
+﻿using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Services;
 
 namespace Application.DTOs.Responses
 {

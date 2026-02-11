@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.Dispatchers;
 using Application.Interfaces.Handlers;
-using Domain.Interfaces;
+using FinanceManager.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Dispatchers

@@ -1,7 +1,7 @@
-﻿using Domain.Abstractions;
-using Domain.Interfaces;
+﻿using FinanceManager.Domain.Abstractions;
+using FinanceManager.Domain.Interfaces;
 
-namespace Domain.Events
+namespace FinanceManager.Domain.Events
 {
     public class TransactionPaidEvent(Guid transactionId, DateTime paymentDate) : DomainEvent
     {

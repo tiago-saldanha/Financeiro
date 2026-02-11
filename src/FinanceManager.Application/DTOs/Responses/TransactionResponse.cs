@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using FinanceManager.Domain.Entities;
 
 namespace Application.DTOs.Responses
 {

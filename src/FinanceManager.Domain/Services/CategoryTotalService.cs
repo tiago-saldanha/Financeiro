@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using Domain.ValueObjects;
+﻿using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Enums;
+using FinanceManager.Domain.ValueObjects;
 
-namespace Domain.Services
+namespace FinanceManager.Domain.Services
 {
     public class CategoryTotalService
     {

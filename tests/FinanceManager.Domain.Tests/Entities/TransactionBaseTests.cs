@@ -1,4 +1,4 @@
-﻿namespace Domain.Tests.Entities
+﻿namespace FinanceManager.Domain.Tests.Entities
 {
     public class TransactionBaseTests
     {

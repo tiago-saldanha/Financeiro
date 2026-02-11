@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using FinanceManager.Domain.Interfaces;
 
 namespace Application.Interfaces.Dispatchers
 {

@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.Responses;
-using Domain.Entities;
-using Domain.Enums;
+using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Enums;
 
 namespace Application.Tests.DTOs.Responses
 {

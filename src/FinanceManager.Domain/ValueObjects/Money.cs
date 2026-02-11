@@ -1,6 +1,6 @@
-﻿using Domain.Exceptions;
+﻿using FinanceManager.Domain.Exceptions;
 
-namespace Domain.ValueObjects
+namespace FinanceManager.Domain.ValueObjects
 {
     public readonly record struct Money
     {

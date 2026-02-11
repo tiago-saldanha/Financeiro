@@ -1,4 +1,4 @@
-﻿using Domain.Repositories;
+﻿using FinanceManager.Domain.Repositories;
 using Application.DTOs.Requests;
 using Application.DTOs.Responses;
 using Application.Enums;

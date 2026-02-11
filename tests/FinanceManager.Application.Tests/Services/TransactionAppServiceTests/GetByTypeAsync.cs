@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Application.Enums;
-using Domain.Entities;
-using Domain.Enums;
+using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Enums;
 using Moq;
 
 namespace Application.Tests.Services.TransactionAppServiceTests

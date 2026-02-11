@@ -1,9 +1,9 @@
 ﻿using Application.DTOs.Responses;
 using Application.Enums;
-using Domain.Entities;
-using Domain.Enums;
-using Domain.Exceptions;
-using Domain.Interfaces;
+using FinanceManager.Domain.Entities;
+using FinanceManager.Domain.Enums;
+using FinanceManager.Domain.Exceptions;
+using FinanceManager.Domain.Interfaces;
 using Moq;
 
 namespace Application.Tests.Services.TransactionAppServiceTests

@@ -1,5 +1,5 @@
 ﻿using Application.Exceptions;
-using Domain.Exceptions;
+using FinanceManager.Domain.Exceptions;
 using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;

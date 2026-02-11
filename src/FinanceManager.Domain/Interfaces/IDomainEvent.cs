@@ -1,4 +1,4 @@
-﻿namespace Domain.Interfaces
+﻿namespace FinanceManager.Domain.Interfaces
 {
     public interface IDomainEvent
     {

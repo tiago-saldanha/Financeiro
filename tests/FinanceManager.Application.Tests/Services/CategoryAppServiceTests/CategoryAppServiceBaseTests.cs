@@ -1,6 +1,6 @@
 ﻿using Application.Services;
-using Domain.Repositories;
-using Domain.Services;
+using FinanceManager.Domain.Repositories;
+using FinanceManager.Domain.Services;
 using Moq;
 
 namespace Application.Tests.Services.CategoryAppServiceTests

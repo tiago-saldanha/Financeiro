@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using FinanceManager.Domain.Entities;
 using Moq;
 
 namespace Application.Tests.Services.CategoryAppServiceTests
