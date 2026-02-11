@@ -27,3 +27,16 @@
 /Infraestructure/obj
 /Application.Tests/bin/Debug/net8.0
 /Application.Tests/obj
+/src/FinanceManager.API/bin/Debug/net8.0
+/src/FinanceManager.API/obj
+/src/FinanceManager.Application/bin/Debug/net8.0
+/src/FinanceManager.Application/obj
+/src/FinanceManager.CrossCutting/bin/Debug/net8.0
+/src/FinanceManager.CrossCutting/obj
+/src/FinanceManager.Domain/bin/Debug/net8.0
+/src/FinanceManager.Domain/obj
+/src/FinanceManager.Infrastructure
+/tests/FinanceManager.Application.Tests/bin/Debug/net8.0
+/tests/FinanceManager.Application.Tests/obj
+/tests/FinanceManager.Domain.Tests/bin/Debug/net8.0
+/tests/FinanceManager.Domain.Tests/obj
