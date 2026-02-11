@@ -3,54 +3,45 @@ namespace FinanceManager.Application.Tests.Mapper
 {
     public class MapperTests
     {
-        [Fact]
-        public void TransactionStatus_WhenDtoIsValid_ShouldMapToDomainStatus()
+        [Theory]
+        [InlineData(Enums.TransactionStatusDto.Pending, Domain.Enums.TransactionStatus.Pending)]
+        [InlineData(Enums.TransactionStatusDto.Paid, Domain.Enums.TransactionStatus.Paid)]
+        [InlineData(Enums.TransactionStatusDto.Cancelled, Domain.Enums.TransactionStatus.Cancelled)]
+        public void TransactionStatus_WhenDtoIsValid_ShouldMapToDomainStatus(Enums.TransactionStatusDto status, Domain.Enums.TransactionStatus expected)
         {
-            var pendingDto = Enums.TransactionStatusDto.Pending;
-            var paidDto = Enums.TransactionStatusDto.Paid;
-            var cancelledDto = Enums.TransactionStatusDto.Cancelled;
-            
-            var pendingStatus = Application.Mapper.Mapper.TransactionStatus(pendingDto);
-            var paidStatus = Application.Mapper.Mapper.TransactionStatus(paidDto);
-            var cancelledStatus = Application.Mapper.Mapper.TransactionStatus(cancelledDto);
-            
-            Assert.Equal(Domain.Enums.TransactionStatus.Pending, pendingStatus);
-            Assert.Equal(Domain.Enums.TransactionStatus.Paid, paidStatus);
-            Assert.Equal(Domain.Enums.TransactionStatus.Cancelled, cancelledStatus);
+            var result = Application.Mapper.Mapper.TransactionStatus(status);
+            Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void TransactionType_WhenDtoIsValid_ShouldMapToDomainType()
+        [Theory]
+        [InlineData(Enums.TransactionTypeDto.Revenue, Domain.Enums.TransactionType.Revenue)]
+        [InlineData(Enums.TransactionTypeDto.Expense, Domain.Enums.TransactionType.Expense)]
+        public void TransactionType_WhenDtoIsValid_ShouldMapToDomainType(Enums.TransactionTypeDto type, Domain.Enums.TransactionType expected)
         {
-            var revenue = Enums.TransactionTypeDto.Revenue;
-            var expense = Enums.TransactionTypeDto.Expense;
+            var result = Application.Mapper.Mapper.TransactionType(type);
 
-            var revenueType = Application.Mapper.Mapper.TransactionType(revenue);
-            var expenseType = Application.Mapper.Mapper.TransactionType(expense);
-
-            Assert.Equal(Domain.Enums.TransactionType.Revenue, revenueType);
-            Assert.Equal(Domain.Enums.TransactionType.Expense, expenseType);
+            Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void TransactionType_WhenStringIsValid_ShouldMapToDomainType()
+        [Theory]
+        [InlineData("revenue", Domain.Enums.TransactionType.Revenue)]
+        [InlineData("expense", Domain.Enums.TransactionType.Expense)]
+        public void TransactionType_WhenStringIsValid_ShouldMapToDomainType(string status, Domain.Enums.TransactionType expected)
         {
-            var revenue = "revenue";
-            var expense = "expense";
+            var result = Application.Mapper.Mapper.TransactionType(status);
 
-            var revenueType = Application.Mapper.Mapper.TransactionType(revenue);
-            var expenseType = Application.Mapper.Mapper.TransactionType(expense);
-
-            Assert.Equal(Domain.Enums.TransactionType.Revenue, revenueType);
-            Assert.Equal(Domain.Enums.TransactionType.Expense, expenseType);
+            Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void TransactionStatusOrType_WhenInputIsInvalid_ShouldThrowException()
+        [Theory]
+        [InlineData(10, 1000, "invalid_type")]
+        [InlineData(11, 2000, " ")]
+        [InlineData(12, 3000, "     ")]
+        public void TransactionStatusOrType_WhenInputIsInvalid_ShouldThrowException(int status, int type, string typeString)
         {
-            var invalidStatusDto = (Enums.TransactionStatusDto)999;
-            var invalidTypeDto = (Enums.TransactionTypeDto)999;
-            var invalidTypeString = "invalid_type";
+            var invalidStatusDto = (Enums.TransactionStatusDto)status;
+            var invalidTypeDto = (Enums.TransactionTypeDto)type;
+            var invalidTypeString = typeString;
 
             Assert.Throws<Application.Exceptions.TransactionStatusAppException>(() => Application.Mapper.Mapper.TransactionStatus(invalidStatusDto));
             Assert.Throws<Application.Exceptions.TransactionTypeAppException>(() => Application.Mapper.Mapper.TransactionType(invalidTypeDto));
