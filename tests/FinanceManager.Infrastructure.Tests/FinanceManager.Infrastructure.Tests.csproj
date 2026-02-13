@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\FinanceManager.Domain\FinanceManager.Domain.csproj" />
-    <ProjectReference Include="..\src\FinanceManager.Infrastructure\FinanceManager.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\FinanceManager.Domain\FinanceManager.Domain.csproj" />
+    <ProjectReference Include="..\..\src\FinanceManager.Infrastructure\FinanceManager.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
