@@ -4,6 +4,8 @@ using System.Text.Json;
 using FinanceManager.API.Tests.Fixture;
 using FinanceManager.Application.DTOs.Responses;
 using FinanceManager.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FinanceManager.API.Tests.Endpoints
@@ -14,6 +16,7 @@ namespace FinanceManager.API.Tests.Endpoints
         private readonly HttpClient _client;
         private readonly IServiceScope _scope;
         private readonly AppDbContext _context;
+        private IDbContextTransaction _transaction;
 
         public CategoryEndpointTests(CustomWebApplicationFactory factory)
         {
@@ -23,16 +26,10 @@ namespace FinanceManager.API.Tests.Endpoints
         }
 
         public async Task InitializeAsync()
-        {
-            _context.Database.EnsureCreated();
-            await Task.CompletedTask;
-        }
+            => _transaction = await _context.Database.BeginTransactionAsync();
 
         public async Task DisposeAsync()
-        {
-            _context.Categories.RemoveRange(_context.Categories);
-            await _context.SaveChangesAsync();
-        }
+            => await _transaction.RollbackAsync();
 
         [Fact]
         public async Task POST_ShouldCreateCategory()
